@@ -1,4 +1,5 @@
 import { VibeKanbanWebCompanion } from 'vibe-kanban-web-companion';
+import { initI18n, setLocale, getCurrentLocale, t } from './i18n.js';
 
 // Todos array (Feature 1)
 let todos = [];
@@ -8,8 +9,10 @@ let nextId = 1;
 let currentFilter = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
+    initI18n();
     init();
     initVibeKanban();
+    updateLangBtn();
 });
 
 function init() {
@@ -32,8 +35,12 @@ function init() {
 }
 
 function initVibeKanban() {
-    const companion = new VibeKanbanWebCompanion();
-    companion.render(document.body);
+    try {
+        const companion = new VibeKanbanWebCompanion();
+        companion.render(document.body);
+    } catch (e) {
+        console.warn('VibeKanban failed to initialize:', e);
+    }
 }
 
 // Feature 1: Add, toggle, delete todos
@@ -81,7 +88,7 @@ function renderTodos() {
         li.innerHTML = `
             <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
             <span class="todo-text">${escapeHtml(todo.text)}</span>
-            <button class="todo-delete">Delete</button>
+            <button class="todo-delete">${t('button.delete')}</button>
         `;
 
         li.querySelector('.todo-checkbox').addEventListener('change', () => toggleTodo(todo.id));
@@ -115,6 +122,18 @@ function setFilter(filter) {
     });
 
     renderTodos();
+}
+
+// Language toggle
+function updateLangBtn() {
+    const langBtn = document.getElementById('langBtn');
+    langBtn.textContent = getCurrentLocale() === 'en' ? 'SV' : 'EN';
+    langBtn.addEventListener('click', () => {
+        const next = getCurrentLocale() === 'en' ? 'sv' : 'en';
+        setLocale(next);
+        langBtn.textContent = next === 'en' ? 'SV' : 'EN';
+        renderTodos();
+    });
 }
 
 // Utility function to escape HTML

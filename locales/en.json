@@ -1,0 +1,10 @@
+{
+  "app.title": "My App",
+  "app.heading": "My Todos",
+  "input.placeholder": "Add a new todo...",
+  "button.add": "Add",
+  "filter.all": "All",
+  "filter.active": "Active",
+  "filter.completed": "Completed",
+  "button.delete": "Delete"
+}

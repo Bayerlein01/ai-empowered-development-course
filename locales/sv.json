@@ -1,0 +1,10 @@
+{
+  "app.title": "Min App",
+  "app.heading": "Mina Uppgifter",
+  "input.placeholder": "Lägg till en ny uppgift...",
+  "button.add": "Lägg till",
+  "filter.all": "Alla",
+  "filter.active": "Aktiva",
+  "filter.completed": "Slutförda",
+  "button.delete": "Ta bort"
+}
